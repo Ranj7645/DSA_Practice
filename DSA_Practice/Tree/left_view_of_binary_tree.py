@@ -21,17 +21,35 @@ root.right.right.right = Node(60)
           \       \
            90      60
 '''
-from collections import deque
-def left_view_of_binary_tree(root):
+max_height = 0
+def left_view_of_binary_tree_recurssive(root,height):
+
+    global max_height
     if root is None:
         return
-    ans = deque([root])
-    while ans:
-        size = len(ans)
+    if max_height < height:
+        print(root.val)
+        max_height = height
+    left_view_of_binary_tree_recurssive(root.left, height+1)
+    left_view_of_binary_tree_recurssive(root.right, height + 1)
+
+from collections import deque
+def left_view_of_binary_tree_iterative(node):
+    if node is None:
+        return
+
+    q = deque([node])
+    while len(q)>0:
+        size = len(q)
         for i in range(size):
-            curr = ans.popleft()
-            if i == 0:
+            curr = q.popleft()
+            if i==0:
+                print(curr.val)
+            if curr.left:
+                q.append(curr.left)
+            if curr.right:
+                q.append(curr.right)
 
-
-
-left_view_of_binary_tree(root)
+left_view_of_binary_tree_recurssive(root,1)
+print("method ------------------------ --------------------  -------------------- 2")
+left_view_of_binary_tree_iterative(root)
