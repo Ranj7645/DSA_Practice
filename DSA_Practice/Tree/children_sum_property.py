@@ -4,29 +4,32 @@ class Node:
         self.left = None
         self.right = None
 
-root = Node(10)
-root.left = Node(20)
-root.left.right =Node(12)
-root.right = Node(30)
-root.right.right = Node(50)
-root.right.left = Node(40)
-root.right.left.right = Node(90)
-root.right.right.right = Node(60)
+root = Node(20)
+root.left = Node(8)
+root.left.left =Node(3)
+root.right = Node(12)
+root.left.right =Node(5)
 '''
-     10
+     20
     /  \
-  20     30
-   \      / \
-    12  40    50
-          \       \
-           90      60
+  8     12
+ / \     
+3   5  
 '''
-from collections import deque
-def child_sum(root):
-    if root is None:
-        return
-    q = deque([root])
 
-    while len(q) > 0:
-        size = len(q)
-        for i in range(size):
+def child_sum_property(root):
+    if root is None:
+        return True
+
+    if root.left is None and root.right is None:
+        return True
+
+    sum = 0
+    if root.left is not None:
+        sum += root.left.val
+    if root.right is not None:
+        sum += root.right.val
+
+    return sum == root.val and child_sum_property(root.left) and child_sum_property(root.right)
+
+print(child_sum_property(root))
